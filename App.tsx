@@ -216,8 +216,9 @@ function App() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                <StatCard label="Est. Diameter" value={formatNumber(asteroidData.diameter_km_est_min)} unit="km" />
                <StatCard label="Abs. Magnitude" value={formatNumber(asteroidData.absolute_magnitude_h)} unit="H" />
-               <StatCard label="Relative Vel." value={formatNumber(asteroidData.close_approach_data[0]?.relative_velocity?.kilometers_per_second)} unit="km/s" />
-               <StatCard label="Period" value={formatNumber(asteroidData.orbital_data.a ** 1.5 * 365.25)} unit="days" />
+               {/* Fixed: Added optional chaining to prevent crash if close_approach_data is undefined or empty */}
+               <StatCard label="Relative Vel." value={formatNumber(asteroidData.close_approach_data?.[0]?.relative_velocity?.kilometers_per_second)} unit="km/s" />
+               <StatCard label="Period" value={formatNumber(asteroidData.orbital_data?.a ? asteroidData.orbital_data.a ** 1.5 * 365.25 : 0)} unit="days" />
             </div>
 
             <div className="bg-space-800 p-6 rounded-xl border border-space-700">
