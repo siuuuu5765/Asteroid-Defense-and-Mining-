@@ -14,6 +14,11 @@ export const fetchAsteroidData = async (query: string): Promise<AsteroidData> =>
 
     const prompt = `Generate a valid JSON object matching the 'AsteroidData' interface for asteroid named "${query}". 
       Use real orbital elements (a, e, i, om, w, ma) if known, otherwise approximate. 
+
+      CRITICAL REQUIREMENTS:
+      1. You MUST provide numerical estimates for 'absolute_magnitude_h', 'diameter_km_est_min', and 'diameter_km_est_max'. If unknown, calculate/estimate based on standard type.
+      2. You MUST include at least one entry in 'close_approach_data' with a valid 'relative_velocity' and 'miss_distance'. Do not return an empty array.
+      
       Interface: { id, name, designation, absolute_magnitude_h, diameter_km_est_min, diameter_km_est_max, is_potentially_hazardous, orbital_data: {a, e, i, om, w, ma}, close_approach_data: [{close_approach_date, relative_velocity: {kilometers_per_second}, miss_distance: {astronomical}}] }`;
 
     const response = await ai.models.generateContent({

@@ -214,9 +214,9 @@ function App() {
             <OrbitViz3D orbitalData={asteroidData.orbital_data} targetName={asteroidData.name} />
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-               <StatCard label="Est. Diameter" value={formatNumber(asteroidData.diameter_km_est_min)} unit="km" />
+               {/* Use a fallback to max diameter if min is 0 or null */}
+               <StatCard label="Est. Diameter" value={formatNumber(asteroidData.diameter_km_est_min || asteroidData.diameter_km_est_max)} unit="km" />
                <StatCard label="Abs. Magnitude" value={formatNumber(asteroidData.absolute_magnitude_h)} unit="H" />
-               {/* Fixed: Added optional chaining to prevent crash if close_approach_data is undefined or empty */}
                <StatCard label="Relative Vel." value={formatNumber(asteroidData.close_approach_data?.[0]?.relative_velocity?.kilometers_per_second)} unit="km/s" />
                <StatCard label="Period" value={formatNumber(asteroidData.orbital_data?.a ? asteroidData.orbital_data.a ** 1.5 * 365.25 : 0)} unit="days" />
             </div>
